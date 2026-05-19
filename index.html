@@ -181,6 +181,10 @@
         const coordinateDhu = [1338, 1664];
         const coordinateCicatrice = [1330, 1445];
         const coordinateDorgon = [1440, 1169];
+        const coordinateEden = [1263, 1005];
+        const coordinateTiNaugi = [1347, 358];
+        const coordinateAvian = [1249, 205];
+        const coordinateOvest = [704, 208];
 
         const epee = L.marker(coordinateEpee).addTo(map);
         const stMarian = L.marker(coordinateStMarian).addTo(map);
@@ -195,6 +199,10 @@
         const dhu = L.marker(coordinateDhu).addTo(map);
         const cicatrice = L.marker(coordinateCicatrice, {icon: creaIcona('orange')}).addTo(map);
         const dorgon = L.marker(coordinateDorgon).addTo(map);
+        const eden = L.marker(coordinateEden).addTo(map);
+        const tiNaugi = L.marker(coordinateTiNaugi).addTo(map);
+        const avian = L.marker(coordinateAvian).addTo(map);
+        const ovest = L.marker(coordinateOvest, {icon: creaIcona('orange')}).addTo(map);
 
 
         // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
@@ -377,7 +385,59 @@
         <p>In estate, Dorgon gode di una pace relativa. È una città silenziosa, solenne, dove il rispetto si guadagna con la nobiltà d'animo e la forza tranquilla. Qui non troverete le arene caotiche di D’Hu, ma campi d'addestramento disciplinati e biblioteche che conservano le memorie di un'epoca che il mondo ha cercato di dimenticare.</p>
         `);
 
+        eden.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Eden</h3>
+            <p>Circondata da una catena montuosa dalle vette affilate come lame e affacciata su un mare perennemente scosso da tempeste fragorose, Eden è una fortezza naturale che sfida il mondo. È l'unica città dove il termine "abominio" perde il suo veleno, trasformandosi in cittadinanza. Sotto il cielo plumbeo del Nord, questa metropoli di pietra scura e ferro rappresenta l'ultimo porto sicuro per chiunque sia stato rinnegato dalla luce di Marian.</p> 
+            
+            <p>Eden è un mosaico di esistenze proibite. Passeggiando per i suoi mercati, è comune incrociare lo sguardo di un Tiefling, il cui sangue demoniaco è qui visto come una cicatrice di guerra e non come una colpa, o di un Aasimar, discendente di quegli angeli che scelsero di cadere piuttosto che servire ciecamente. Qui, la convivenza è una necessità di ferro: nonostante le differenze biologiche e le antiche inimicizie, tutte le razze mostruose vivono in una pace vigile, unite dall'odio che il resto del mondo riversa su di loro.</p> 
+            
+            <p>A dominare l'intero skyline della città è il Castello di Ossidiana, una struttura di roccia nera lucida che sembra assorbire la poca luce del Nord. È qui che risiede Artemis Molochus VI. Nessun cittadino, nemmeno il più influente, può vantarsi di aver visto il volto del Signore del Nord. Egli è un'ombra che governa attraverso decreti precisi e un'amministrazione impeccabile. Gli ingranaggi della città girano con una perfezione quasi soprannaturale, facendo sentire la sua influenza in ogni strada, in ogni legge, in ogni respiro di Eden.</p> 
+            
+            <p>Per la Chiesa di Marian, Eden è il "Nido delle Vipere". Gli umani sono convinti che Molochus VI passi i suoi giorni a compiere sacrifici indicibili e rituali blasfemi per resuscitare l'antico Moloch e scatenare una nuova apocalisse sulle Quattro Isole. Eden non cerca il conflitto, ma è pronta a riceverlo. La sua posizione geografica la rende quasi inespugnabile: le montagne che la cingono sono percorribili solo da guide che conoscono sentieri nascosti tra le nubi, e le sue coste rocciose hanno reclamato le vite di innumerevoli flotte di fanatici religiosi. Per chi riesce a entrarvi, Eden non è una prigione, ma un santuario dove il giudizio della Dea non ha potere.</p>
 
+        `);
+
+        tiNaugi.bindPopup(`
+        <div class="popup-scrollabile">
+        <h3 style="margin-top:0; color:#d9a752;">Ti-Naugi</h3>
+        <p>Laddove le terre del Nord degradano in paludi perenni, avvolte da una nebbia che sa di zolfo e marciume, sorge Ti-Naugi. È la patria delle razze squamate, ma anche l'ultimo rifugio per chiunque voglia sparire dai radar del mondo. Se Eden è una fortezza e Dorgon un bastione, Ti-Naugi è una ferita aperta, un groviglio caotico di canali, palafitte e rovine sommerse.</p> 
+        
+        <p>A differenza della rigida efficienza che si respira nel resto del Nord, Ti-Naugi è una città abbandonata al proprio destino. Non esistono pattuglie, non esistono tribunali. In assenza di un governo centrale, la città è stata spartita tra briganti, signorotti della guerra e sindacati criminali. Ogni quartiere è un piccolo regno dove la vita vale quanto il peso del tuo oro o la velocità della tua lama. Qui sopravvive solo chi è più veloce, più velenoso o più spietato. È il cuore del mercato nero delle Quattro Isole: se un oggetto è proibito a Marian o raro a Tordon, con ogni probabilità lo troverai in un banchetto di Ti-Naugi, se riuscirai a sopravvivere al viaggio.</p> 
+        
+        <p>La fondatrice e Cavaliere della città, la Yuan-Ti Selina, è una figura enigmatica quanto pericolosa. Nonostante sia uno dei quattro vassalli di Molochus VI, la sua presenza a Ti-Naugi è sporadica. Si dice che sia ossessionata da antichi rituali e che si assenti per mesi per condurre esperimenti in luoghi che nemmeno i suoi simili osano sognare. Nonostante il pericolo, Ti-Naugi attira chiunque cerchi poteri che la Dea Marian ha bandito. Incantatori rinnegati, alchimisti senza scrupoli e ladri leggendari si aggirano tra i fumi della palude, cercando di non attirare l'attenzione dei piccoli tiranni locali o, peggio ancora, degli occhi dorati e ipnotici dei seguaci di Selina.</p> </div>
+        `);
+
+        avian.bindPopup(`
+        <div class="popup-scrollabile">
+        <h3 style="margin-top:0; color:#d9a752;">Avian</h3>
+        <p>Sospesa tra le nuvole e le rocce scoscese che sovrastano lo Stretto del Diavolo, Avian è una città che si sviluppa in verticale, un labirinto di ponti sospesi, guglie affilate e piattaforme vertiginose. È il regno delle razze alate, Aarakocra e tutte le creature che chiamano il cielo "casa". Qui, la gerarchia sociale è dettata dall'altitudine: più in alto voli, più sei vicino alla libertà.</p> 
+        
+        <p>Avian è costruita per chi possiede le ali, rendendo la vita un incubo logistico per chiunque sia ancorato a terra. Il livello più basso è un groviglio di vicoli bui e umidi, dove i rari visitatori "terrestri" e i cittadini più poveri vivono letteralmente all'ombra della nobiltà. Qui la luce del sole è un lusso filtrato da chilometri di architetture sovrastanti.</p>
+        
+        <p>Solo i più ricchi e i più nobili risiedono nei livelli superiori, dove i palazzi non hanno tetti e la vista spazia libera sopra le nuvole. Da lassù, i cittadini di Avian guardano il mondo dall'alto in basso, ignorando le leggi di chi striscia al suolo.</p> 
+        
+        <p>La città è stata fondata dall’imprevedibile Ikki, Cavaliere di Molochus e leggendaria Maestra dello Zefiro. Ikki è una figura atipica nel Nord: meno politica di Dorgon e meno brutale di D’urk, è nota soprattutto per la sua catena di locande, famose in tutte le Quattro Isole.</p> 
+        
+        <p>Ad Avian sorge la primissima Locanda di Ikki, un porto franco dove ogni razza e ceto sociale è il benvenuto. Molti viaggiatori affrontano il pericoloso viaggio fino al Nord solo per assaggiare la cucina di Ikki o per sperare di incontrare la "Campionessa dei Venti" in persona. Si dice che Ikki premi con doni straordinari o benedizioni dello zefiro chiunque dimostri la dedizione necessaria a raggiungere la sua dimora originaria.</p> 
+        
+        <p>Avian funge da guardiana di un confine che nessuno vuole varcare. La città si affaccia sullo Stretto del Diavolo, un tratto di mare dove venti innaturali e violenti soffiano con tale forza da spezzare ali e alberi maestri. Oltre quelle tempeste perenni, sono visibili le coste desolate delle Terre dell’Ovest. Un tempo cuore pulsante del mondo, ora sono terre dimenticate e maledette, isolate dal colpo finale di Marian. Nessuno attraversa lo stretto, ma gli abitanti di Avian passano le notti a osservare quelle rive silenziose, chiedendosi cosa sia rimasto tra le ombre della Grande Guerra.</p> </div>
+        `);
+
+        ovest.bindPopup(`
+        <div class="popup-scrollabile">
+        <h3 style="margin-top:0; color:#d9a752;">Ovest</h3>
+        <p>Un tempo culla della civiltà più avanzata, l'Isola dell'Ovest è oggi un monito di roccia e cenere. È circondata dallo Stretto del Diavolo e dallo Stretto della Speranza, ma entrambi i nomi sono ironici: le coste sono pareti verticali di ossidiana e granito, flagellate da tempeste che non hanno mai smesso di infuriare dalla caduta di Moloch.</p> 
+        
+        <p>Dalle vette più alte dello stretto Speranza, nelle giornate di rara visibilità, si possono scorgere i resti di Mira. Quella che un tempo era chiamata "La Gioia del Mondo", oggi è uno scheletro di marmo bianco e cenere. Si dice che a Mira l'architettura fosse così perfetta che gli angeli vi camminavano accanto agli uomini. Ora, le sue torri spezzate sembrano dita di un cadavere che puntano verso un cielo che le ha abbandonate. Non si vedono luci, non si vede fumo. Mira è una città immobile, dove il tempo sembra essersi fermato nell'istante esatto in cui Marian ha sferrato il colpo finale.</p> 
+        
+        <p>Nel cuore dell'isola svetta il Monte Tetro, un vulcano spento (o forse solo dormiente) dalla sagoma inquietante. La leggenda narra che non sia nato da movimenti geologici, ma che sia sorto come un tumore della terra: Si dice che quando i primi traditori iniziarono a provare invidia e odio verso la perfezione di Marian, le loro energie negative si siano concentrate in questo punto, dando vita a Moloch. Se l'Occhio di Marian è il portale della Dea, il Monte Tetro è considerato il cordone ombelicale dell'Inferno. I sapienti del Nord sussurrano che finché il monte resterà freddo, Moloch non potrà tornare, ma i vapori neri che talvolta ne scivolano lungo i fianchi suggeriscono che qualcosa sotto la cenere stia ancora respirando.</p> 
+        
+        <p>Non esistono racconti di esploratori tornati dall'Ovest. Chi ha provato a sfidare le correnti è stato inghiottito dal mare o frantumato contro le scogliere.</p> 
+        
+        <p>L'Ovest non è solo un luogo fisico, è una Maledizione: Si specula che nell'Ovest la vegetazione non cresca e che l'aria stessa sia intrisa del "Sangue di Moloch" e della "Luce Ustionante di Marian", rendendo impossibile la vita biologica. </p>
+
+        `);
         // --- TRUCCO PER TROVARE LE COORDINATE ---
         // Fai doppio clic in un punto qualsiasi della mappa mentre testi il sito sul PC: 
         // ti apparirà un avviso (alert) con le coordinate esatte di quel punto, così potrai copiarle nel codice per i prossimi Pin!
