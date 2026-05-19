@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mappa Interattiva D&D</title>
+    
+    <!-- Libreria Leaflet (CSS e JS) per gestire lo zoom e il drag della mappa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* Reset della pagina per far occupare alla mappa tutto lo schermo dello smartphone/PC */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; /* Sfondo scuro per i bordi */
+        }
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        /* Stile personalizzato per i pop-up (molto GDR style) */
+        .leaflet-popup-content-wrapper {
+            background: #2c251e;
+            color: #f1e6d2;
+            border: 2px solid #8c6d3e;
+            font-family: 'Georgia', serif;
+            border-radius: 8px;
+        }
+        .leaflet-popup-tip {
+            background: #2c251e;
+            border: 1px solid #8c6d3e;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script>
+        // --- CONFIGURAZIONE INIZIALE ---
+        // Sostituisci questo con il nome esatto della tua immagine (es. 'faerun.png')
+        const FILE_IMMAGINE = 'mappa.png'; 
+        
+        // Dimensioni indicative della tua mappa in pixel (servono a Leaflet per calcolare i confini)
+        // Non devono essere perfette, servono solo come sistema di coordinate fisso.
+        const larghezzaMappa = 2000;
+        const altezzaMappa = 1500;
+
+        // --- INIZIALIZZAZIONE DELLA MAPPA ---
+        // Usiamo L.CRS.Simple perché la mappa è un'immagine piatta, non il pianeta Terra.
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2, // Permette di zoomare molto indietro per vedere tutta la mappa
+            maxZoom: 2,  // Permette di zoomare molto vicino
+        });
+
+        // Definiamo i confini dell'immagine (in pratica gli angoli dello schermo)
+        const confini = [[0, 0], [altezzaMappa, larghezzaMappa]];
+
+        // Carichiamo l'immagine sopra la mappa
+        const immagineMappa = L.imageOverlay(FILE_IMMAGINE, confini).addTo(map);
+
+        // Diciamo alla mappa di inquadrare subito l'intera immagine all'avvio
+        map.fitBounds(confini);
+
+        // --- AGGIUNTA DEL PIN (IL TEST) ---
+        // Le coordinate funzionano così: [Altezza (Y), Larghezza (X)]
+        // Avendo impostato 1500 di altezza e 2000 di larghezza, [750, 1000] è esattamente il centro.
+        const coordinatePin = [750, 1000]; 
+
+        const mioPin = L.marker(coordinatePin).addTo(map);
+
+        // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
+        mioPin.bindPopup(`
+            <h3 style="margin-top:0; color:#d9a752;">Locanda del Drago Sbronzo</h3>
+            <p>La taverna più famosa della città. Il sidro costa 2 ramini e il bardo locale è ricercato in tre regni per frode fiscale.</p>
+            <p><b>PNG presenti:</b> Barnaby il Guercio.</p>
+        `);
+
+        // --- TRUCCO PER TROVARE LE COORDINATE ---
+        // Fai doppio clic in un punto qualsiasi della mappa mentre testi il sito sul PC: 
+        // ti apparirà un avviso (alert) con le coordinate esatte di quel punto, così potrai copiarle nel codice per i prossimi Pin!
+        map.on('dblclick', function(e) {
+            alert("Coordinate di questo punto: [" + e.latlng.lat.toFixed(0) + ", " + e.latlng.lng.toFixed(0) + "]");
+        });
+
+    </script>
+</body>
+</html>
