@@ -33,6 +33,22 @@
             background: #2c251e;
             border: 1px solid #8c6d3e;
         }
+        .popup-scrollabile {
+            max-height: 350px; /* Altezza massima del testo prima di attivare lo scroll */
+            overflow-y: auto;  /* Attiva lo scroll verticale se serve */
+            padding-right: 10px; /* Spazio per non far coprire il testo dalla barra di scorrimento */
+        }
+        /* Abbelliamo la barra di scorrimento per farla sembrare gdr (opzionale ma figo) */
+        .popup-scrollabile::-webkit-scrollbar {
+            width: 6px;
+        }
+        .popup-scrollabile::-webkit-scrollbar-track {
+            background: #1a1410;
+        }
+        .popup-scrollabile::-webkit-scrollbar-thumb {
+            background: #8c6d3e;
+            border-radius: 3px;
+        }
     </style>
 </head>
 <body>
@@ -69,15 +85,23 @@
         // --- AGGIUNTA DEL PIN (IL TEST) ---
         // Le coordinate funzionano così: [Altezza (Y), Larghezza (X)]
         // Avendo impostato 1500 di altezza e 2000 di larghezza, [750, 1000] è esattamente il centro.
-        const coordinatePin = [750, 1000]; 
+        const coordinatePin = [145, 325]; 
 
         const mioPin = L.marker(coordinatePin).addTo(map);
 
         // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
         mioPin.bindPopup(`
-            <h3 style="margin-top:0; color:#d9a752;">Locanda del Drago Sbronzo</h3>
-            <p>La taverna più famosa della città. Il sidro costa 2 ramini e il bardo locale è ricercato in tre regni per frode fiscale.</p>
-            <p><b>PNG presenti:</b> Barnaby il Guercio.</p>
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">L’Épée</h3>
+            <p>Arroccata sulle pendici del sacro Monte di Santa Marian, la città di L’Épée è il bastione della purezza umana. La sua architettura è una dichiarazione di guerra al caos e al peccato, divisa in due livelli che riflettono la doppia natura della fede: la devozione e la spada.</p>
+            <br>
+            <p><b>Bassa L’Épée</b></p>
+            <p>Distesa ai piedi del monte, è una città dalle strade lastricate in marmo bianco, perennemente avvolta dal fumo degli incensi e dal suono delle campane. È il cuore pulsante del culto. Migliaia di pellegrini giungono qui da ogni angolo delle isole per intraprendere il Cammino di Santa Marian. Si dice che chiunque scali l’erta via con cuore puro e devozione incrollabile, una volta giunto alla sommità, possa invocare la discesa di un angelo. Solo i più degni ricevono il dono di un colloquio celeste e la folgorante benedizione della Dea. Qui la diversità è un concetto ignoto. Non vedrete orecchie a punta o stature dimezzate tra queste mura: nessuna creatura "impura" oserebbe mai profanare il suolo di L’Épée, sapendo che la pietà è un lusso che qui non trova dimora.</p>
+            <br>
+            <p><b>Alta L’Épée</b></p>
+            <p>Arroccata sulle vette più aspre e cinta da mura ciclopiche che sembrano sfidare il cielo stesso, sorge l'Alta L’Épée. È un labirinto di torri di guardia e monasteri fortificati, dove il silenzio è interrotto solo dallo sferragliare delle armature. È qui che risiede l’ordine monastico dei Figli della Dea, l'ala più fanatica e spietata del culto di Marian. Per questi monaci-guerrieri, la preghiera è l'acciaio e la liturgia è la caccia. La loro esistenza ha un unico scopo: eradicare ogni traccia di corruzione. Considerano lo sterminio delle razze mostruose e degli "abomini" come un atto di amore supremo verso la Dea, l'unico modo per preservare la perfezione umana e impedire che il sangue dei traditori possa dare vita a un nuovo Moloch. L’ordine dei Figli della Dea è guidato da Fratello Mark, un monaco la cui spietatezza è leggendaria quanto la sua abilità nel corpo a corpo. Assassino senza precedenti e maestro di innumerevoli stili di combattimento, Mark ha consacrato la sua esistenza all'estirpazione dell'eresia, vantando un numero di uccisioni che farebbe impallidire qualsiasi carnefice del Nord. La sua dimora è l'austera abbazia della città-fortezza di L’Épée, dove trascorre lunghi periodi in un isolamento quasi totale. Qui, tra preghiere e digiuni punitivi, Mark affila il suo spirito e il suo corpo come la lama di cui la città porta il nome. Vedere Fratello Mark abbandonare l'abbazia è il segno inequivocabile che l'equilibrio del mondo è crollato. La sua presenza sul campo di battaglia non è mai una questione diplomatica, ma una sentenza di morte. Se Mark cammina tra gli uomini, significa che la Dea ha smesso di ascoltare le preghiere e ha ordinato il massacro. </p>
+            </div>
+
         `);
 
         // --- TRUCCO PER TROVARE LE COORDINATE ---
