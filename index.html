@@ -117,17 +117,23 @@
         const coordinateStMarian = [213, 1028];
         const coordinateAulentia = [113, 1606];
         const coordinatePiumaOro = [193, 1884];
-
         const coordinateTorreArgento = [291, 1885];
         const coordinateGrandeForesta = [474, 1881];
+        const coordinateMaria = [746, 1780];
+        const coordinateIsolaGiganti = [787, 1574];
+        const coordinateTordon = [913, 1961];
+        const coordinateElena = [1184, 1804];
 
         const epee = L.marker(coordinateEpee).addTo(map);
         const stMarian = L.marker(coordinateStMarian).addTo(map);
         const aulentia = L.marker(coordinateAulentia).addTo(map);
         const piumaOro = L.marker(coordinatePiumaOro).addTo(map);
-
         const torreArgento = L.marker(coordinateTorreArgento).addTo(map);
-        const grandeForesta = L.marker(coordinateGrandeForesta, {icon: creaIcona('orange')}).addTo(map)
+        const grandeForesta = L.marker(coordinateGrandeForesta, {icon: creaIcona('orange')}).addTo(map);
+        const maria = L.marker(coordinateMaria).addTo(map);
+        const isolaGiganti = L.marker(coordinateIsolaGiganti, {icon: creaIcona('orange')}).addTo(map);
+        const tordon = L.marker(coordinateTordon).addTo(map);
+        const elena = L.marker(coordinateElena).addTo(map);
 
 
         // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
@@ -206,6 +212,62 @@
             
             <p>La foresta non perdona i superbi. Senza una guida locale, un ranger esperto o un druido che sappia parlare alle fronde, il viaggio è un suicidio. I sentieri cambiano, le ombre ingannano e gli spiriti della natura proteggono i propri segreti. Mentre i turisti umani si limitano ai sentieri sicuri del versante sud per brividi da storie dell'orrore, chi cerca la verità deve rischiare la vita tra le sue radici millenarie. </p>
             </div>
+        `);
+
+        maria.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Mària</h3>
+            <p>Oltre il cuore verde della foresta sorge Mària, la più grande e prospera città delle Terre dell'Est.</p> 
+            
+            <p>Sebbene non esista un impero organizzato, Mària funge da faro culturale e commerciale per tutte le città-stato della regione. È un crogiolo di vita: qui il martello dei nani batte all'unisono con la magia degli gnomi e la grazia degli elfi.</p> 
+            
+            <p>La città prende il nome dalla sua regnante, la Campionessa Elfa Mària, un'eroina della Grande Guerra che sembra aver sconfitto il tempo stesso. Nonostante siano passati mille anni, lei siede ancora sul trono, immutata, fungendo da scudo vivente contro i pericoli del Nord.</p> 
+            
+            <p>Mària è una città divisa nel cuore. La maggior parte degli abitanti è fiera di vivere all'ombra della propria eroina, ma nei vicoli meno illuminati il malcontento serpeggia. I radicali elfi e nani la chiamano "la Schiava Splendente", accusandola di aver venduto l'anima a una Dea che li considera errori di creazione, trasformando la loro terra in un cuscinetto per proteggere gli umani.</p> 
+            
+            <p>In questo luogo, la tolleranza è legge. È uno dei rarissimi posti dove anche le razze più mostruose, se non mostrano intenzioni violente, possono camminare senza il timore di essere giustiziate dai Figli della Dea, rendendo il mercato di Mària il più vario ed esotico di tutto il mondo conosciuto. </p>
+            </div>
+        `);
+
+        isolaGiganti.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Isola dei Giganti</h3>
+            <p>Sperduta nel cuore del mare e raggiungibile solo salpando dal porto di Mària, quest'isola è una terra di proporzioni impossibili. Qui, la roccia è scolpita da mani colossali e l'aria vibra di un'energia residua che risale a prima della Grande Guerra. È un luogo di solitudine e silenzio, abitato solo dai Giganti, creature tanto antiche quanto schive, e da eremiti che hanno abbandonato la civiltà per cercare risposte tra le nuvole.</p> 
+            
+            <p>L'isola è costellata di rovine ciclopiche la cui origine divide i sapienti delle Quattro Isole: I sacerdoti di Marian affermano che siano i resti di templi maestosi costruiti dai giganti per onorare la Dea all'alba dei tempi. Alcuni credono che siano i rimasugli dell'antica civiltà unita, prima che il tradimento di Moloch spaccasse il mondo e le razze. Gli abitanti di Dorgon e i sognatori del Nord sussurrano che queste vette fossero i nidi delle creature mitologiche più maestose, i Draghi, prima che scomparissero dalla faccia del mondo.</p> 
+            
+            <p>Il motivo principale che spinge i turisti e i pellegrini più coraggiosi fino a qui è la vista mozzafiato. Dall'alto dei picchi dell'isola, è possibile abbracciare con lo sguardo l'intero mondo conosciuto, ma l'attenzione di tutti viene rapita dall'Occhio di Marian.</p> 
+            
+            <p>Situato esattamente al centro del mare, l'Occhio è un terrificante vortice d'acqua e tempesta perenne. Un turbine ciclonico che crea una depressione marina simile a una pupilla spalancata, un luogo dove le leggi della navigazione cessano di esistere.</p> 
+            
+            <p>La dottrina ufficiale vuole che l'Occhio sia il punto di congiunzione tra il Cielo e la Terra, il portale attraverso il quale la Dea ascende e discende per benedire i suoi figli. Una leggenda molto più cupa sussurra invece che il vortice sia il sigillo eterno: il punto esatto dove l'anima di Moloch è stata incatenata alle radici del mondo, e che la tempesta non sia altro che la prigione che Marian ha creato per sigillarlo.</p>
+
+        `)
+
+        tordon.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Tordon</h3>
+            <p>Incastonata tra le vette innevate delle catene montuose che segnano il confine con l'estremo Est inesplorato, sorge Tordon. Qui la terra non viene calpestata, ma scavata, forgiata e dominata. È la patria di nani, gnomi e di chiunque creda che il valore di un individuo risieda nei calli delle sue mani piuttosto che nella purezza del suo sangue.</p> 
+            
+            <p>A Tordon, la metafisica non ha cittadinanza. Gli abitanti sono spietatamente materialisti: non hanno tempo per le "fantasie spiritiche" degli elfi o per le pretese di una Dea che li considera impuri. In questa città, il rispetto si guadagna con il sudore. La gerarchia sociale non è dettata da benedizioni divine, ma dalla maestria artigianale e dalla profondità dei tunnel scavati. I loro prodotti, dalle armi indistruttibili ai complessi meccanismi gnomici,  sono i più richiesti al mondo. Anche i nobili del Sud, che in pubblico li disprezzano definendoli "razze mostruose", in privato pagano fortune per possedere un pezzo dell'acciaio forgiato a Tordon.</p> 
+            
+            <p>Invece di pregare Marian, gli abitanti di Tordon onorano la memoria di coloro che hanno lasciato un'impronta tangibile nel mondo. La figura più venerata è il leggendario fabbro minatore Lucius Manolesta che, secondo la tradizione locale, costruì la Torre d’Argento. Per Tordon, quel monumento non è un omaggio alla Dea, ma il più grande "gesto di sfida" della storia: una prova monumentale che un mortale di sangue impuro può superare in splendore e ingegno qualsiasi creazione divina.</p> 
+            
+            <p>Nelle strade di Marian, un nano viene deriso per la sua bassa statura e la sua grettezza. A Tordon, è un Chierico di Marian a essere oggetto di scherno: visto come un parassita nullafacente che spreca il tempo a invocare benedizioni invece di impugnare un piccone. Qui, la bellezza è la simmetria di un ingranaggio, non la luce del mattino.</p>
+
+        `);
+
+        elena.bindPopup(`
+        <div class="popup-scrollabile">
+        <h3 style="margin-top:0; color:#d9a752;">Eléna</h3>
+        <p>Mentre Tordon batte il ferro nelle viscere della terra, Eléna si erge verso il cielo con un'eleganza che toglie il respiro.</p> 
+        
+        <p>Considerata la capitale spirituale degli elfi, è una città di strutture slanciate e raffinate, dove la pietra sembra piegarsi come seta e la sfarzosità non è mai ostentazione, ma una celebrazione sobria della bellezza universale. A Eléna, la radianza di Marian è un ricordo lontano e fioco. Qui il freddo non è visto come una punizione, ma come un velo che invita al silenzio e alla meditazione.</p> 
+        
+        <p>Gli abitanti non si inchinano a una divinità superiore che li giudica "imperfetti", ma onorano gli spiriti che permeano ogni fibra della natura. Credono che ogni creatura sia sacra perché in essa scorre lo stesso "Soffio di Vita" che anima il vento e le foreste. Questo profondo rispetto per l'anima rende Eléna una delle città più aperte del mondo. Qui anche le razze più mostruose sono accolte con gentilezza, a patto che rispettino la sacralità del luogo. L’unica, amara eccezione sono i Tiefling: il ricordo della distruzione portata dai diavoli mille anni fa è ancora una cicatrice aperta, e la loro vicinanza al sangue di Moloch li rende indesiderati anche tra le anime più pazienti.</p> 
+        
+        <p>Eléna occupa una posizione geografica e politica pericolosissima. È l'ultima roccaforte dell'Est prima delle desolate Terre del Nord. Durante i mesi caldi, le navi non possono attraccare a causa delle scogliere vertiginose e dei mari impetuosi che proteggono la città. Eléna rimane un santuario inaccessibile dal Nord. Quando il freddo morde, si compie il miracolo (o la maledizione): il mare gela, formando l'Istmo di Ghiaccio. Per pochi mesi, un ponte naturale di ghiaccio spesso collega Eléna alle terre dei perseguitati. In questo periodo, la città si riempie di merci esotiche e viaggiatori disperati provenienti dal Nord. Per i fedeli di Marian e i Figli della Dea, l’inverno a Eléna è sinonimo di sacrilegio. Credono che l'apertura dell'Istmo sia un varco nelle difese del mondo, un momento di estremo pericolo in cui le "bestie" del Nord possono contaminare le terre civili. Mentre a Eléna si celebra lo scambio e la vita, al Sud si affilano le spade e si recitano preghiere per la chiusura dei ghiacci. </p></div>
+
         `);
 
         // --- TRUCCO PER TROVARE LE COORDINATE ---
