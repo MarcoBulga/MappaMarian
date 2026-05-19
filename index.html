@@ -61,6 +61,26 @@
         .pin-gdr svg:hover {
             transform: scale(1.1); /* Il pin si ingrandisce leggermente quando ci passi sopra */
         }
+
+        /* Stile per la nostra scala grafica personalizzata */
+        .scala-gdr {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(44, 37, 30, 0.9); /* Stesso sfondo dei pop-up */
+            color: #f1e6d2;
+            border: 2px solid #8c6d3e;
+            border-top: none; /* Lascia solo i bordi laterali e inferiori per fare la "righetta" */
+            padding: 3px 10px;
+            font-family: 'Georgia', serif;
+            font-size: 12px;
+            line-height: 1;
+            z-index: 1000; /* La tiene sopra la mappa */
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
+            pointer-events: none; /* Evita che dia fastidio se ci clicchi sopra */
+            text-align: center;
+        }
+    
     </style>
 </head>
 <body>
@@ -83,7 +103,6 @@
             });
         }
 
-
         // --- CONFIGURAZIONE INIZIALE ---
         // Sostituisci questo con il nome esatto della tua immagine (es. 'faerun.png')
         const FILE_IMMAGINE = 'mappa.png'; 
@@ -101,6 +120,7 @@
             maxZoom: 2,  // Permette di zoomare molto vicino
         });
 
+
         // Definiamo i confini dell'immagine (in pratica gli angoli dello schermo)
         const confini = [[0, 0], [altezzaMappa, larghezzaMappa]];
 
@@ -109,6 +129,41 @@
 
         // Diciamo alla mappa di inquadrare subito l'intera immagine all'avvio
         map.fitBounds(confini);
+
+        
+    // 1. Creiamo la righetta sullo schermo
+    const divScala = document.createElement('div');
+    divScala.className = 'scala-gdr';
+    document.getElementById('map').appendChild(divScala);
+
+    function aggiornaNuovaScala() {
+        // Prendiamo lo zoom attuale (0, 1, 2, ecc.)
+        const zoomAttuale = map.getZoom();
+        
+        // 2. REGOLA QUI LA TUA SCALA allo zoom di partenza (Zoom 0)
+        // Scegli quanti KM devono corrispondere a una barra larga 150 pixel
+        let chilometriRiferimento = 100; 
+
+        // Questa formula magica dimezza i chilometri ogni volta che fai zoom avanti
+        // (Se a zoom 0 sono 100km, a zoom 1 diventano 50km, a zoom 2 diventano 25km...)
+        let kmAttuali = chilometriRiferimento / Math.pow(2, zoomAttuale);
+        
+        // Se scendiamo sotto 1 km, passiamo ai metri per non vedere lo "0"
+        if (kmAttuali < 1) {
+            let metri = Math.round(kmAttuali * 1000);
+            divScala.innerHTML = `${metri} m`;
+        } else {
+            divScala.innerHTML = `${Math.round(kmAttuali)} km`;
+        }
+        
+        // Fissiamo la larghezza della barra a 150 pixel
+        divScala.style.width = '150px';
+    }
+
+    // Aggiorna la scala quando muovi o zoomi la mappa
+    map.on('zoomend viewreset', aggiornaNuovaScala);
+    // Esegui subito al caricamento
+    aggiornaNuovaScala();
 
         // --- AGGIUNTA DEL PIN (IL TEST) ---
         // Le coordinate funzionano così: [Altezza (Y), Larghezza (X)]
@@ -123,6 +178,9 @@
         const coordinateIsolaGiganti = [787, 1574];
         const coordinateTordon = [913, 1961];
         const coordinateElena = [1184, 1804];
+        const coordinateDhu = [1338, 1664];
+        const coordinateCicatrice = [1330, 1445];
+        const coordinateDorgon = [1440, 1169];
 
         const epee = L.marker(coordinateEpee).addTo(map);
         const stMarian = L.marker(coordinateStMarian).addTo(map);
@@ -134,6 +192,9 @@
         const isolaGiganti = L.marker(coordinateIsolaGiganti, {icon: creaIcona('orange')}).addTo(map);
         const tordon = L.marker(coordinateTordon).addTo(map);
         const elena = L.marker(coordinateElena).addTo(map);
+        const dhu = L.marker(coordinateDhu).addTo(map);
+        const cicatrice = L.marker(coordinateCicatrice, {icon: creaIcona('orange')}).addTo(map);
+        const dorgon = L.marker(coordinateDorgon).addTo(map);
 
 
         // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
@@ -269,6 +330,53 @@
         <p>Eléna occupa una posizione geografica e politica pericolosissima. È l'ultima roccaforte dell'Est prima delle desolate Terre del Nord. Durante i mesi caldi, le navi non possono attraccare a causa delle scogliere vertiginose e dei mari impetuosi che proteggono la città. Eléna rimane un santuario inaccessibile dal Nord. Quando il freddo morde, si compie il miracolo (o la maledizione): il mare gela, formando l'Istmo di Ghiaccio. Per pochi mesi, un ponte naturale di ghiaccio spesso collega Eléna alle terre dei perseguitati. In questo periodo, la città si riempie di merci esotiche e viaggiatori disperati provenienti dal Nord. Per i fedeli di Marian e i Figli della Dea, l’inverno a Eléna è sinonimo di sacrilegio. Credono che l'apertura dell'Istmo sia un varco nelle difese del mondo, un momento di estremo pericolo in cui le "bestie" del Nord possono contaminare le terre civili. Mentre a Eléna si celebra lo scambio e la vita, al Sud si affilano le spade e si recitano preghiere per la chiusura dei ghiacci. </p></div>
 
         `);
+
+        dhu.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">D’hu</h3>
+            <p>Oltre l’Istmo di Ghiaccio, dove il vento taglia come una lama e la radianza di Marian è solo una leggenda sbiadita, sorge D’Hu. Più che una città, D’Hu è un’estesa costellazione di accampamenti, villaggi fortificati e steppe inospitali. È il cuore pulsante delle razze pelleverde: orchi, bugbear e goblin che hanno trovato nella forza l'unica vera legge.</p> 
+            
+            <p>D’Hu sfida ogni concetto umano di urbanistica. È una città-territorio dove le varie attività sono rigidamente divise tra tribù distanti chilometri l'una dall'altra: Se cerchi acciaio e scambi, devi recarti alla <i>Tribù dei Commercianti</i>; se cerchi gloria, devi cavalcare fino alla <i>Tribù dei Lottatori</i>.</p> 
+            
+            <p>Tra questi centri vitali si stendono terre brulle e pericolose, dove la civiltà sparisce e domina la natura selvaggia. In queste terre inospitali passano il loro tempo gli aspiranti alla <i>Casta della Roccia</i>. È qui che affrontano la prova finale, un rito di sopravvivenza estremo che li trasforma nei guerrieri più potenti della nazione orchesca: esseri forgiati dalla pietra e dal gelo, pilastri della difesa del Nord.</p> 
+            
+            <p>Tener unito un popolo così frammentato e incline al conflitto richiederebbe un miracolo nel Sud; nel Nord, richiede D’urk. Questo immenso orco, dalla resistenza leggendaria, è il leader che è riuscito a unificare le tribù sotto un unico stendardo.</p> 
+            
+            <p>D’urk è uno dei Quattro Cavalieri, i leggendari campioni del Nord che agiscono come vassalli del misterioso Artemis Molochus VI. Nonostante i suoi doveri politici, D’urk è un guerriero nell'anima: lo si può trovare spesso nelle arene della sua città a sfidare chiunque sia abbastanza folle da pensare di poter abbattere "la Montagna".</p>
+            </div> 
+
+        `);
+
+        cicatrice.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Cicatrice Bocca dell’Inferno</h3>
+            <p>Nel cuore ferito del mondo sorge la Cicatrice, un canyon colossale le cui pareti di roccia strappata sprofondano in un abisso di tenebra assoluta. Non è un fenomeno naturale, ma il segno tangibile della furia di una divinità: qui è dove la spada di Marian calò per l’ultima volta, recidendo l’esistenza di Moloch e spaccando la terra stessa per inghiottirne i resti.</p> 
+            
+            <p>Per i fedeli di Marian, la Cicatrice è un luogo sacro, la prova definitiva della supremazia della Luce sull’Ombra. Per tutti gli altri, è un monito silenzioso e terrificante. Il canyon non ha un fondo visibile; si dice che l'abisso non porti semplicemente nelle viscere della terra, ma in una dimensione di esilio eterno. Leggende cupe sussurrano che le anime maligne, quelle che hanno rinnegato la grazia di Marian o che sono state corrotte dal peccato, sentano un richiamo irresistibile provenire dalle profondità. Si dice che la Cicatrice "fami" di oscurità, attirando a sé i reietti per farli vagare in eterno insieme ai diavoli esiliati dopo la Grande Guerra.</p> 
+            
+            <p>Nonostante la sua aura maledetta, la Bocca dell'Inferno attira visitatori da ogni dove: Cavalieri e fanatici del Sud giungono qui per pregare sull'orlo dell'abisso, sfidando i venti gelidi che risalgono dal canyon, convinti che contemplare il punto della vittoria divina fortifichi lo spirito. Molte razze mostruose e paria del Nord intraprendono viaggi pericolosi verso la Cicatrice. Alcuni vengono per piangere la caduta del loro antico signore, altri per cercare di recuperare frammenti di potere demoniaco rimasti incastrati nelle pareti rocciose, sperando di udire i sussurri dei diavoli che ancora abitano l'ombra.</p> 
+            
+            <p>Attorno alla Cicatrice non sorgono città; l'energia sprigionata dal colpo di Marian è ancora così intensa da distorcere il tempo e la mente. Solo piccoli avamposti di monaci-custodi o accampamenti di cercatori di reliquie osano sfidare la desolazione di questo sito, dove il confine tra il mondo dei vivi e l'Inferno è sottile come il filo di una spada. </p>
+            
+            </div>
+        `);
+
+        dorgon.bindPopup(`
+        <div class="popup-scrollabile">
+        <h3 style="margin-top:0; color:#d9a752;">Dorgon</h3>
+        <p>Situata ai margini delle distese boreali, Dorgon è l'avamposto più settentrionale delle Quattro Isole. Oltre le sue mura non esiste che la Neve Eterna: un deserto di ghiaccio tormentato da tempeste di neve così violente da polverizzare la volontà dei più coraggiosi. È qui che risiedono i Dragonidi e tutti i discendenti degli antichi Draghi, creature che il resto del mondo considera ormai semplici miti.</p> 
+        
+        <p>A Dorgon, la sopravvivenza è una questione di eredità. Gli abitanti possiedono un calore interiore naturale, un retaggio dei loro antenati squamati, che permette loro di resistere a temperature che ucciderebbero un umano in pochi minuti.</p> 
+        
+        <p>Mentre i cittadini di Dorgon rivendicano con orgoglio la discendenza dai nobili Draghi, la Chiesa di Marian diffonde una verità diversa: sostiene che i Draghi non siano mai esistiti e che il "calore" dei dragonidi sia in realtà il marchio del sangue demoniaco che ribolle nelle loro vene.</p> 
+        
+        <p>Durante l'inverno, la città viene letteralmente sommersa. La vita si sposta nel sottosuolo o in edifici massicci riscaldati da camini perenni, dove i racconti della gloria antica vengono tramandati di generazione in generazione mentre fuori infuria la tempesta.</p> 
+        
+        <p>La città è governata e protetta dall'omonimo Cavaliere Dorgon, il più nobile e cavalleresco dei Quattro Vassalli di Molochus VI. Al contrario della ferocia di D’urk o dell'imprevedibilità di altri cavalieri come Ikki, Dorgon segue un rigido codice d'onore. Dorgon vive con un senso di responsabilità schiacciante. Egli sa che se la roccaforte di Eden dovesse mai cadere sotto i colpi dei Figli della Dea, la sua città sarebbe l'ultima difesa del Nord. Per questo, ha trasformato l'insediamento in un bastione inespugnabile, addestrando ogni cittadino all'arte della guerra e della resilienza.</p> 
+        
+        <p>In estate, Dorgon gode di una pace relativa. È una città silenziosa, solenne, dove il rispetto si guadagna con la nobiltà d'animo e la forza tranquilla. Qui non troverete le arene caotiche di D’Hu, ma campi d'addestramento disciplinati e biblioteche che conservano le memorie di un'epoca che il mondo ha cercato di dimenticare.</p>
+        `);
+
 
         // --- TRUCCO PER TROVARE LE COORDINATE ---
         // Fai doppio clic in un punto qualsiasi della mappa mentre testi il sito sul PC: 
