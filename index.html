@@ -49,6 +49,18 @@
             background: #8c6d3e;
             border-radius: 3px;
         }
+        .pin-gdr {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .pin-gdr svg {
+            filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.6));
+            transition: transform 0.2s;
+        }
+        .pin-gdr svg:hover {
+            transform: scale(1.1); /* Il pin si ingrandisce leggermente quando ci passi sopra */
+        }
     </style>
 </head>
 <body>
@@ -56,6 +68,22 @@
     <div id="map"></div>
 
     <script>
+        function creaIcona(colore) {
+            return L.divIcon({
+                className: 'pin-gdr',
+                iconSize: [30, 42],       // Dimensioni del pin [larghezza, altezza]
+                iconAnchor: [15, 42],     // Il punto esatto che tocca le coordinate (in basso al centro)
+                popupAnchor: [0, -40],    // Da dove deve spuntare il fumetto del testo
+                html: `
+                    <svg width="30" height="42" viewBox="0 0 24 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 9 12 20 12 20s12-11 12-20c0-6.63-5.37-12-12-12z" fill="${colore}"/>
+                        <circle cx="12" cy="11" r="4" fill="#2c251e"/>
+                    </svg>
+                `
+            });
+        }
+
+
         // --- CONFIGURAZIONE INIZIALE ---
         // Sostituisci questo con il nome esatto della tua immagine (es. 'faerun.png')
         const FILE_IMMAGINE = 'mappa.png'; 
@@ -85,12 +113,25 @@
         // --- AGGIUNTA DEL PIN (IL TEST) ---
         // Le coordinate funzionano così: [Altezza (Y), Larghezza (X)]
         // Avendo impostato 1500 di altezza e 2000 di larghezza, [750, 1000] è esattamente il centro.
-        const coordinatePin = [145, 325]; 
+        const coordinateEpee = [145, 325]; 
+        const coordinateStMarian = [213, 1028];
+        const coordinateAulentia = [113, 1606];
+        const coordinatePiumaOro = [193, 1884];
 
-        const mioPin = L.marker(coordinatePin).addTo(map);
+        const coordinateTorreArgento = [291, 1885];
+        const coordinateGrandeForesta = [474, 1881];
+
+        const epee = L.marker(coordinateEpee).addTo(map);
+        const stMarian = L.marker(coordinateStMarian).addTo(map);
+        const aulentia = L.marker(coordinateAulentia).addTo(map);
+        const piumaOro = L.marker(coordinatePiumaOro).addTo(map);
+
+        const torreArgento = L.marker(coordinateTorreArgento).addTo(map);
+        const grandeForesta = L.marker(coordinateGrandeForesta, {icon: creaIcona('orange')}).addTo(map)
+
 
         // Contenuto del pop-up quando ci clicchi sopra (puoi usare il normale codice HTML per grassetti, a capo, ecc.)
-        mioPin.bindPopup(`
+        epee.bindPopup(`
             <div class="popup-scrollabile">
             <h3 style="margin-top:0; color:#d9a752;">L’Épée</h3>
             <p>Arroccata sulle pendici del sacro Monte di Santa Marian, la città di L’Épée è il bastione della purezza umana. La sua architettura è una dichiarazione di guerra al caos e al peccato, divisa in due livelli che riflettono la doppia natura della fede: la devozione e la spada.</p>
@@ -101,7 +142,70 @@
             <p><b>Alta L’Épée</b></p>
             <p>Arroccata sulle vette più aspre e cinta da mura ciclopiche che sembrano sfidare il cielo stesso, sorge l'Alta L’Épée. È un labirinto di torri di guardia e monasteri fortificati, dove il silenzio è interrotto solo dallo sferragliare delle armature. È qui che risiede l’ordine monastico dei Figli della Dea, l'ala più fanatica e spietata del culto di Marian. Per questi monaci-guerrieri, la preghiera è l'acciaio e la liturgia è la caccia. La loro esistenza ha un unico scopo: eradicare ogni traccia di corruzione. Considerano lo sterminio delle razze mostruose e degli "abomini" come un atto di amore supremo verso la Dea, l'unico modo per preservare la perfezione umana e impedire che il sangue dei traditori possa dare vita a un nuovo Moloch. L’ordine dei Figli della Dea è guidato da Fratello Mark, un monaco la cui spietatezza è leggendaria quanto la sua abilità nel corpo a corpo. Assassino senza precedenti e maestro di innumerevoli stili di combattimento, Mark ha consacrato la sua esistenza all'estirpazione dell'eresia, vantando un numero di uccisioni che farebbe impallidire qualsiasi carnefice del Nord. La sua dimora è l'austera abbazia della città-fortezza di L’Épée, dove trascorre lunghi periodi in un isolamento quasi totale. Qui, tra preghiere e digiuni punitivi, Mark affila il suo spirito e il suo corpo come la lama di cui la città porta il nome. Vedere Fratello Mark abbandonare l'abbazia è il segno inequivocabile che l'equilibrio del mondo è crollato. La sua presenza sul campo di battaglia non è mai una questione diplomatica, ma una sentenza di morte. Se Mark cammina tra gli uomini, significa che la Dea ha smesso di ascoltare le preghiere e ha ordinato il massacro. </p>
             </div>
+        `);
 
+        stMarian.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Marian</h3>
+            <p>Se L’Épée è la lama della fede, Marian ne è il cuore radioso. È la città dove l'ombra non riesce a posarsi, costruita in marmo bianco e venature d'oro che riflettono la luce del mattino in ogni vicolo. Qui il sacro e il profano si fondono in un mercato unico al mondo: tra spezie e tessuti, potrete trovare mercanti di reliquie, feticci religiosi benedetti e icone votive che promettono la protezione della Dea.</p> 
+
+            <p>Al centro della capitale sorge il palazzo del Primo Paladino, la massima autorità spirituale e militare dell'umanità. Sebbene il nome richiami l'antica cavalleria, il Primo Paladino non è necessariamente un guerriero: può essere un potente mago o un mistico sapiente. Ciò che conta è il suo sangue, quello dell'eroe che millenni fa impugnò le armi accanto alla Dea. Il titolo non è ereditario per semplice diritto di nascita, ma per scelta divina. La Dea stessa manifesta la sua volontà, investendo il successore con la Benedizione Massima, un legame diretto e trascendentale che solo il sovrano può vantare. L’attuale Primo Paladino è il Principe Leone, scelto dalla dea per la purezza del suo sangue e la fede incrollabile che lo anima.</p> 
+
+            <p>Il fulcro della vita cittadina è la maestosa Cattedrale di Marian. In questa terra, la Dea non è un concetto astratto, ma una madre presente e protettiva. In giorni solenni, la Dea discende fisicamente tra i mortali. È in questi momenti che i giovani umani, al raggiungimento della maggiore età, vengono battezzati personalmente da lei, ricevendo una Benedizione Minore che li scherma dalle energie oscure per tutta la vita. Coloro che dimostrano un coraggio eccezionale possono aspirare a benedizioni più intense, doni di potere che elevano i mortali a leggende viventi. Per chi non è nato umano, o per gli umani che non hanno ricevuto il battesimo diretto, la benevolenza divina è più difficile da ottenere. Gli angeli, messaggeri di Marian, possono concedere benedizioni minori, ma il loro intervento è raro. I chierici della cattedrale agiscono da intermediari: chiunque desideri il favore celeste deve provare la propria fede attraverso atti di estrema dedizione o versando ingenti somme d'oro per i rituali di evocazione angelica. A Marian, la salvezza è un diritto per i puri, ma una merce preziosa per tutti gli altri. </p> 
+            </div>
+        `);
+
+        aulentia.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Aulentia</h3>
+            <p>Nascosta nel cuore di un bosco così fitto che la luce del sole sembra filtrare solo come una pioggia dorata, sorge Aulentia. È l'unico luogo nelle terre del Sud dove il dogma di Marian si piega a un’armonia insolita: qui, umani ed elfi convivono in una pace immobile, quasi fuori dal tempo.</p> 
+
+            <p>Il nome della città deriva dai fiori rari che sbocciano lungo il limitare del bosco, emanando una fragranza fresca e dolciastra che avvolge ogni sentiero. Si dice che questo profumo abbia il potere di calmare i cuori più tormentati, rendendo Aulentia la meta sognata da chi desidera trascorrere gli ultimi anni della vita lontano dal clamore del mondo e dalle guerre di religione.</p> 
+            
+            <p>Nonostante la sua bellezza, Aulentia è circondata da un'aura di inquietante mistero. I suoi cittadini sono estremamente schivi e accolgono gli stranieri con una cortesia gelida che nasconde un profondo desiderio di restare isolati. Fuori dai suoi confini, la gente di Marian sussurra storie terribili. Alcuni dicono che il bosco sia senziente e che "ingerisca" chiunque vi entri con intenzioni malvagie, facendogli smarrire la strada per l'eternità. Altri, più cinici, sostengono che la città sia un covo di cannibali e creature che hanno rinnegato la Luce di Marian per nutrirsi di chiunque osi profanare il loro isolamento.</p> 
+            
+            <p>Quel che è certo è che chi entra ad Aulentia raramente ne esce. Che sia per la pace idilliaca o per un destino più sinistro, la città rimane un segreto ben custodito tra le fronde.</p>
+
+            </div>
+        `);
+
+        piumaOro.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Piuma d’Oro</h3>
+            <p>Situata sulla punta estrema dello stretto che separa il Sud dalle Terre dell'Est, Piuma d’Oro è il polmone commerciale del regno. È una città che non dorme mai, dove il profumo dei mercati di spezie si mescola al salmastro dell'oceano e all'odore metallico dei minerali nani.</p> 
+            
+            <p>Se Marian è l'anima e L'Épée è il braccio, Piuma d’Oro è la borsa del mondo umano. È qui che la perfezione umana scende a patti con la necessità materiale. Ogni ora, chiatte cariche di legname elfico, pietre preziose estratte dai nani e manufatti grezzi provenienti dall'Est attraccano ai suoi moli. È il punto di transito obbligato per chiunque voglia attraversare lo stretto. In poche ore di navigazione tranquilla, si può passare dal rigido dogma del Sud alla libertà caotica dell'Est.</p> 
+            
+            <p>Sebbene il commercio con le "razze impure" sia vitale, il disprezzo non svanisce. Le razze mostruose o i mezzosangue che camminano per queste strade devono farlo con cautela: sono tollerati finché i loro forzieri sono pieni, ma lo sguardo delle guardie cittadine resta gelido e sospettoso.</p> 
+            
+            <p>Un tempo, la sicurezza della città era garantita da Lucrezia, uno dei quattro leggendari Campioni della Dea. Il suo compito era proteggere il Sud da infiltrazioni nordiche o ambizioni orientali. Vent'anni fa, Lucrezia svanì nel nulla senza lasciare traccia. La sua assenza ha creato un vuoto di potere che preoccupa la Chiesa: senza il suo "Scudo", Piuma d'Oro è diventata più vulnerabile, ma anche più incline a traffici illeciti e segreti che la Chiesa preferirebbe non vedere.</p> 
+            
+            <p>Oltre che per i suoi moli, la città è celebre per i suoi piaceri terreni. È la capitale gastronomica del Sud, dove i prodotti della terra benedetta da Marian vengono trasformati in prelibatezze leggendarie. Cuochi e buongustai viaggiano per settimane solo per assaggiare i piatti tipici di Piuma d'Oro, rendendo le taverne locali luoghi di ritrovo unici dove, tra un boccale di vino e un piatto prelibato, si possono ascoltare storie provenienti da ogni angolo delle quattro isole. </p>
+
+            </div>
+        `);
+
+        torreArgento.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Torre d’Argento</h3>
+            <p>Chiunque lasci il Sud per avventurarsi nelle Terre dell’Est incrocia, come prima immagine, l'imponente sagoma di Torre d’Argento.</p> 
+            
+            <p>Sebbene l'architettura della città richiami ancora lo stile severo e maestoso delle città umane, l'aria che si respira è diversa: più selvatica, intrisa di storie che la chiesa di Marian non potrebbe mai controllare del tutto. A dominare l'orizzonte è un colossale pilastro di argento purissimo che svetta verso il cielo, riflettendo i raggi del sole con un'intensità quasi divina. La sua origine è il più grande mistero delle Quattro Isole: Per i Devoti: È il dono che Marian fece alla leggendaria Elfa che combatté al fianco degli umani contro Moloch, un segno di gratitudine per un'anima che ha saputo elevarsi sopra la propria razza. Per i Druidi dell'Est: È un antico parafulmine di energia spirituale, costruito per proteggere il battito vitale della natura e onorare gli spiriti del bosco. Per i Nani: È il capolavoro di Lucius Manolesta, il fabbro che volle dimostrare al mondo che nessuna mano, nemmeno quella divina, può eguagliare la precisione di un mazzuolo nanico.</p> 
+            
+            <p>Torre d’Argento è famosa soprattutto per essere la terra natale della Campionessa Mària, una figura che sfida ogni logica del Sud. Pur essendo un'elfa, è l'unica creatura non umana ad aver mai ricevuto la Benedizione Maggiore direttamente da Marian. Per le "razze imperfette", lei è la prova vivente che la grazia divina non è preclusa. Migliaia di elfi, nani e halfling guardano a lei con ammirazione, pronti a compiere sacrifici estremi e dimostrazioni di fede incrollabile pur di dimostrare alla Dea di essere degni del suo sguardo.</p> 
+
+            </div>
+        `);
+
+        grandeForesta.bindPopup(`
+            <div class="popup-scrollabile">
+            <h3 style="margin-top:0; color:#d9a752;">Grande Foresta</h3>
+            <p>Per gli abitanti del Sud, l'Est inizia a Torre d'Argento. Ma per le razze meticce, quella è solo un'imitazione. Il "Vero Est" comincia dove finiscono i sentieri battuti e inizia la Grande Foresta, una barriera vegetale così fitta e antica da sembrare un organismo unico e senziente.</p> 
+            
+            <p>Al contrario del Sud, che venera la forma perfetta di Marian, qui regna il Culto Spiritico. Druidi e nomadi si addentrano nel fitto bosco alla ricerca dello Spirito del Vento, l'entità invisibile che, secondo la leggenda, soffia la scintilla vitale in ogni creatura della foresta.</p> 
+            
+            <p>La foresta non perdona i superbi. Senza una guida locale, un ranger esperto o un druido che sappia parlare alle fronde, il viaggio è un suicidio. I sentieri cambiano, le ombre ingannano e gli spiriti della natura proteggono i propri segreti. Mentre i turisti umani si limitano ai sentieri sicuri del versante sud per brividi da storie dell'orrore, chi cerca la verità deve rischiare la vita tra le sue radici millenarie. </p>
+            </div>
         `);
 
         // --- TRUCCO PER TROVARE LE COORDINATE ---
